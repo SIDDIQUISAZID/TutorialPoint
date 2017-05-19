@@ -1,0 +1,143 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" href="CoursePages.css" >
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>C++ Polymorphism</title>
+</head>
+<body>
+
+<header>
+eduOnline
+</header>
+
+<h1>C++ POLYMORPHISM</h1>
+
+<p>The word <b>polymorphism</b> means having many forms. Typically, polymorphism occurs when there is a hierarchy of classes and they are related by inheritance.</p>
+<p>C++ polymorphism means that a call to a member function will cause a different function to be executed depending on the type of object that invokes the function.</p>
+<p>Consider the following example where a base class has been derived by other two classes:</p>
+<pre class="prettyprint notranslate tryit">
+#include &lt;iostream&gt; 
+using namespace std;
+ 
+class Shape {
+   protected:
+      int width, height;
+   public:
+      Shape( int a=0, int b=0)
+      {
+         width = a;
+         height = b;
+      }
+      int area()
+      {
+         cout &lt;&lt; "Parent class area :" &lt;&lt;endl;
+         return 0;
+      }
+};
+class Rectangle: public Shape{
+   public:
+      Rectangle( int a=0, int b=0):Shape(a, b) { }
+      int area ()
+      { 
+         cout &lt;&lt; "Rectangle class area :" &lt;&lt;endl;
+         return (width * height); 
+      }
+};
+class Triangle: public Shape{
+   public:
+      Triangle( int a=0, int b=0):Shape(a, b) { }
+      int area ()
+      { 
+         cout &lt;&lt; "Triangle class area :" &lt;&lt;endl;
+         return (width * height / 2); 
+      }
+};
+// Main function for the program
+int main( )
+{
+   Shape *shape;
+   Rectangle rec(10,7);
+   Triangle  tri(10,5);
+
+   // store the address of Rectangle
+   shape = &amp;rec;
+   // call rectangle area.
+   shape-&gt;area();
+
+   // store the address of Triangle
+   shape = &amp;tri;
+   // call triangle area.
+   shape-&gt;area();
+   
+   return 0;
+}
+</pre>
+<p>When the above code is compiled and executed, it produces the following result:</p>
+<pre class="prettyprint notranslate">
+Parent class area
+Parent class area
+</pre>
+<p>The reason for the incorrect output is that the call of the function area() is being set once by the compiler as the version defined in the base class. This is called <b>static resolution</b> of the function call, or <b>static linkage</b> - the function call is fixed before the program is executed. This is also sometimes called <b>early binding</b> because the area() function is set during the compilation of the program.</p>
+<p>But now, let's make a slight modification in our program and precede the declaration of area() in the Shape class with the keyword <b>virtual</b> so that it  looks like this:</p>
+<pre class="prettyprint notranslate">
+class Shape {
+   protected:
+      int width, height;
+   public:
+      Shape( int a=0, int b=0)
+      {
+         width = a;
+         height = b;
+      }
+      virtual int area()
+      {
+         cout &lt;&lt; "Parent class area :" &lt;&lt;endl;
+         return 0;
+      }
+};
+</pre>
+<p>After this slight modification, when the previous example code is compiled and executed, it produces the following result:</p>
+<pre class="prettyprint notranslate">
+Rectangle class area
+Triangle class area
+</pre>
+<p>This time, the compiler looks at the contents of the pointer instead of it's type. Hence, since addresses of objects of tri and rec classes are stored in *shape the respective area() function is called.</p>
+<p>As you can see, each of the child classes has a separate implementation for the function area(). This is how <b>polymorphism</b> is generally used. You have different classes with a function of the same name, and even the same parameters, but with different implementations.</p>
+<h2>Virtual Function:</h2>
+<p>A <b>virtual</b> function is a function in a base class that is declared using the keyword <b>virtual</b>. Defining in a base class a virtual function, with another version in a derived class, signals to the compiler that we don't want static linkage for this function.</p>
+<p>What we do want is the selection of the function to be called at any given point in the program to be based on the kind of object for which it is called.  This sort of operation is referred to as <b>dynamic linkage</b>, or <b>late binding</b>.</p>
+<h2>Pure Virtual Functions:</h2>
+<p>It's possible that you'd want to include a virtual function in a base class so that it may be redefined in a derived class to suit the objects of that class, but that there is no meaningful definition you could give for the function in the base class.</p>
+<p>We can change the virtual function area() in the base class to the following:</p>
+<pre class="prettyprint notranslate">
+class Shape {
+   protected:
+      int width, height;
+   public:
+      Shape( int a=0, int b=0)
+      {
+         width = a;
+         height = b;
+      }
+      // pure virtual function
+      virtual int area() = 0;
+};
+</pre>
+<p>The = 0 tells the compiler that the function has no body  and above virtual function will be called <b>pure virtual function</b>.</p>
+
+
+<br/><br/><br/><br/><br/>
+<a href="C++Overloading.jsp">Previous</a>
+<a href="C++Abstraction.jsp">Next</a>
+
+<footer>
+<pre>eduOnline
+<span style="font-family:Times New Roman; font-size: 20px; color:crimson;margin-top:0px;">Accessible Quality Education</span>
+<p style="font-size:10px; color:black;"> &#169 2016. All Rights Reserved</p></pre>
+</footer>
+
+</body>
+</html>

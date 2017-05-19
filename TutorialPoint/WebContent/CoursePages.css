@@ -1,0 +1,31 @@
+@CHARSET "ISO-8859-1";
+
+
+
+header{
+	
+	font-family:Bookman Old Style;
+	color:LimeGreen;
+	text-align:center;
+	padding:6x;
+	font-size:48px;
+	background-color:Cornsilk;
+}
+
+body
+
+{
+	background-image:url("./Images/images (1).jpg")
+}
+
+footer {
+	
+	font-family:Bookman Old Style;
+	color:LimeGreen;
+	text-align:center;
+	padding:6x;
+	clear:both;
+	font-size:48px;
+	background-color:Cornsilk;
+	margin-bottom:0px;
+}
